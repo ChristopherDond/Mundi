@@ -78,7 +78,10 @@ export function Globe({ countries }: GlobeProps) {
     };
 
     viewer.camera.changed.addEventListener(handleCameraChange);
-    return () => viewer.camera.changed.removeEventListener(handleCameraChange);
+    return () => {
+      const v = viewerRef.current?.cesiumElement;
+      if (v) v.camera.changed.removeEventListener(handleCameraChange);
+    };
   }, [setCamera]);
 
   React.useEffect(() => {
