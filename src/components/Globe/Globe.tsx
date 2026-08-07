@@ -1,8 +1,8 @@
 'use client';
 
 import * as React from 'react';
-import { Viewer, Entity, Globe as CesiumGlobe } from 'resium';
-import { Color, Cartesian3 } from 'cesium';
+import { Viewer, Globe as CesiumGlobe } from 'resium';
+import { Entity, Color, Cartesian3 } from 'cesium';
 import type { CountryData } from '@/types';
 import { useMundiStore, useSelectedCountry, useHoveredCountry, useIndicator, useTimeSlider, useSetSelectedCountry, useSetHoveredCountry, useSetCamera } from '@/lib/store';
 import { fetchIndicatorForAllCountries } from '@/lib/api';
@@ -97,7 +97,7 @@ export function Globe({ countries }: GlobeProps) {
       const color = getColorForValue(value, indicator!, minMax.min, minMax.max);
       const height = value !== null ? Math.max(10000, (value - minMax.min) / (minMax.max - minMax.min) * 500000) : 10000;
 
-      const entity = new (Entity as any)({
+      const entity = new Entity({
         name: country.name,
         id: country.code,
         polygon: {
