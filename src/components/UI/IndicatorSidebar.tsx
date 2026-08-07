@@ -23,7 +23,7 @@ export function IndicatorSidebar({ isOpen, onClose }: IndicatorSidebarProps) {
   const filteredIndicators = React.useMemo(() => {
     if (!searchQuery) return INDICATORS_META;
     const q = searchQuery.toLowerCase();
-    return INDICATORS_META.filter(m => 
+    return INDICATORS_META.filter(m =>
       m.name.toLowerCase().includes(q) ||
       m.nameEn.toLowerCase().includes(q) ||
       m.id.toLowerCase().includes(q)
@@ -52,7 +52,6 @@ export function IndicatorSidebar({ isOpen, onClose }: IndicatorSidebarProps) {
 
   return (
     <div className="fixed left-0 top-0 h-full w-96 bg-dark/95 backdrop-blur-xl border-r border-slate-800 z-40 flex flex-col animate-slide-up">
-      {/* Header */}
       <div className="flex items-center justify-between p-4 border-b border-slate-800">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-mundi-500 to-mundi-700 flex items-center justify-center">
@@ -70,7 +69,6 @@ export function IndicatorSidebar({ isOpen, onClose }: IndicatorSidebarProps) {
         </button>
       </div>
 
-      {/* Search */}
       <div className="p-4 border-b border-slate-800">
         <div className="relative">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
@@ -84,7 +82,6 @@ export function IndicatorSidebar({ isOpen, onClose }: IndicatorSidebarProps) {
         </div>
       </div>
 
-      {/* Categories */}
       <div className="flex-1 overflow-y-auto p-3 space-y-2">
         {Object.entries(INDICATOR_CATEGORIES).map(([catKey, catMeta]) => {
           const category = catKey as IndicatorCategory;
@@ -144,7 +141,6 @@ export function IndicatorSidebar({ isOpen, onClose }: IndicatorSidebarProps) {
         })}
       </div>
 
-      {/* Footer */}
       <div className="p-4 border-t border-slate-800">
         <p className="text-slate-500 text-xs text-center">
           Dados de: World Bank, UN, WHO, UNESCO, FAO, OECD, Our World in Data

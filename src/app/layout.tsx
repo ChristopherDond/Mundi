@@ -65,6 +65,13 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://assets.cesium.com" />
         <link rel="dns-prefetch" href="https://tile.openstreetmap.org" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.CESIUM_BASE_URL = '/cesium/';
+            `,
+          }}
+        />
       </head>
       <body className="min-h-screen min-w-screen">
         {children}

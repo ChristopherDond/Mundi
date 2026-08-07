@@ -47,7 +47,7 @@ export function TimeSlider() {
   };
 
   return (
-    <div 
+    <div
       className="glass-strong rounded-2xl px-6 py-4 border border-slate-700/50 shadow-2xl"
       onKeyDown={handleKeyDown}
       tabIndex={0}
@@ -58,7 +58,6 @@ export function TimeSlider() {
       aria-valuenow={timeSlider.year}
     >
       <div className="flex items-center justify-between gap-4">
-        {/* Year Display */}
         <div className="flex items-center gap-3 min-w-[140px]">
           <span className="text-slate-400 text-sm font-mono">{timeSlider.range[0]}</span>
           <div className="relative flex-1 max-w-[200px]">
@@ -78,7 +77,6 @@ export function TimeSlider() {
           <span className="text-slate-400 text-sm font-mono">{timeSlider.range[1]}</span>
         </div>
 
-        {/* Controls */}
         <div className="flex items-center gap-2">
           <button
             onClick={() => setYear(timeSlider.range[0])}
@@ -88,7 +86,7 @@ export function TimeSlider() {
           >
             <Rewind className="w-5 h-5" />
           </button>
-          
+
           <button
             onClick={prevYear}
             className="p-2 rounded-lg hover:bg-slate-800 text-slate-300 hover:text-white transition-colors"
@@ -126,7 +124,6 @@ export function TimeSlider() {
           </button>
         </div>
 
-        {/* Speed Control */}
         <div className="flex items-center gap-2 ml-4 pl-4 border-l border-slate-700">
           <span className="text-slate-500 text-xs">Velocidade:</span>
           <select
@@ -143,7 +140,6 @@ export function TimeSlider() {
           </select>
         </div>
 
-        {/* Reset Button */}
         <button
           onClick={resetView}
           className="ml-4 p-2 rounded-lg hover:bg-slate-800 text-slate-400 hover:text-white transition-colors"
@@ -154,15 +150,13 @@ export function TimeSlider() {
         </button>
       </div>
 
-      {/* Progress bar */}
       <div className="mt-3 h-1 bg-slate-800 rounded-full overflow-hidden">
-        <div 
+        <div
           className="h-full bg-gradient-to-r from-mundi-500 to-mundi-400 rounded-full transition-all duration-300"
           style={{ width: `${progress}%` }}
         />
       </div>
 
-      {/* Keyboard hints */}
       <div className="mt-3 flex items-center justify-center gap-6 text-slate-500 text-xs">
         <kbd className="px-2 py-0.5 bg-slate-900 rounded border border-slate-700">←</kbd>
         <span className="text-slate-600">Ano anterior</span>

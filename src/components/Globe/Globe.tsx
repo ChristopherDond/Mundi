@@ -28,17 +28,16 @@ export function Globe({ countries }: GlobeProps) {
   const entitiesRef = React.useRef<Map<string, any>>(new Map());
   const animationRef = React.useRef<number>();
 
-  // Fetch data for current indicator/year
   React.useEffect(() => {
     let mounted = true;
     async function loadData() {
       const data = await fetchIndicatorForAllCountries(indicator!, timeSlider.year);
       if (!mounted) return;
-      
+
       const values = Array.from(data.values()).filter(v => v !== null) as number[];
       const min = Math.min(...values);
       const max = Math.max(...values);
-      
+
       setValueMap(data);
       setMinMax({ min, max });
       setLoaded(true);
@@ -47,7 +46,6 @@ export function Globe({ countries }: GlobeProps) {
     return () => { mounted = false; };
   }, [indicator, timeSlider.year]);
 
-  // Handle time slider animation
   React.useEffect(() => {
     if (timeSlider.playing) {
       const interval = setInterval(() => {
@@ -62,7 +60,6 @@ export function Globe({ countries }: GlobeProps) {
     }
   }, [timeSlider.playing, timeSlider.speed]);
 
-  // Camera tracking
   React.useEffect(() => {
     if (!viewerRef.current) return;
     const viewer = viewerRef.current.cesiumElement;
@@ -84,17 +81,14 @@ export function Globe({ countries }: GlobeProps) {
     return () => viewer.camera.changed.removeEventListener(handleCameraChange);
   }, [setCamera]);
 
-  // Initialize entities for each country
   React.useEffect(() => {
     if (!viewerRef.current || !loaded) return;
     const viewer = viewerRef.current.cesiumElement;
     if (!viewer) return;
 
-    // Clear existing
     entitiesRef.current.forEach(entity => viewer.entities.remove(entity));
     entitiesRef.current.clear();
 
-    // Create entities
     countries.forEach(country => {
       const value = valueMap.get(country.code) ?? null;
       const color = getColorForValue(value, indicator!, minMax.min, minMax.max);
@@ -129,7 +123,6 @@ export function Globe({ countries }: GlobeProps) {
     });
   }, [loaded, valueMap, indicator, timeSlider.year, hoveredCountry, selectedCountry, minMax, countries]);
 
-  // Picking handler
   const handleClick = React.useCallback((movement: { position: Cartesian3 }) => {
     if (!viewerRef.current) return;
     const viewer = viewerRef.current.cesiumElement;
@@ -158,14 +151,13 @@ export function Globe({ countries }: GlobeProps) {
     }
   }, [hoveredCountry, setHoveredCountry]);
 
-  // Simple country polygons (bounding boxes for demo - replace with real GeoJSON)
   function getCountryPolygon(code: string): Cartesian3[] {
     const country = countries.find(c => c.code === code);
     if (!country) return [];
-    
+
     const [lon, lat] = country.coordinates;
-    const size = Math.sqrt(country.area) / 1e6 * 2; // Rough size based on area
-    
+    const size = Math.sqrt(country.area) / 1e6 * 2;
+
     return [
       Cartesian3.fromDegrees(lon - size, lat - size),
       Cartesian3.fromDegrees(lon + size, lat - size),
@@ -180,25 +172,21 @@ export function Globe({ countries }: GlobeProps) {
       <Viewer
         ref={viewerRef}
         onLoad={({ viewer }) => {
-          // Configure globe
           viewer.scene.globe.enableLighting = true;
           viewer.scene.globe.showGroundAtmosphere = true;
           viewer.scene.skyAtmosphere.show = true;
           viewer.scene.skyBox.show = false;
           viewer.scene.backgroundColor = new Color(0.04, 0.06, 0.1, 1);
-          
-          // Disable default UI
+
           viewer.animationContainer?.style.setProperty('display', 'none', 'important');
           viewer.timelineContainer?.style.setProperty('display', 'none', 'important');
           viewer.fullscreenButton?.viewModel?.command?.();
-          
-          // Set initial camera
+
           viewer.camera.setView({
             destination: Cartesian3.fromDegrees(-45, 10, 18000000),
             orientation: { heading: 0, pitch: -Math.PI / 2, roll: 0 },
           });
 
-          // Enable depth testing for extrusions
           viewer.scene.globe.depthTestAgainstTerrain = true;
         }}
         onClick={handleClick}
